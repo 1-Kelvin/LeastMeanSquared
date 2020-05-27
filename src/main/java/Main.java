@@ -3,7 +3,7 @@ import org.nd4j.linalg.factory.Nd4j;
 
 public class Main {
     public static void main(String[] args) {
-        LeastMeanSquaredCalculator leastMeanSquaredCalculator = new LeastMeanSquaredCalculator(1);
+        LeastMeanSquaredCalculator leastMeanSquaredCalculator = new LeastMeanSquaredCalculator(2);
         INDArray xvec0 = Nd4j.create(new float[][]{{1}, {0}});
         INDArray xvec1 = Nd4j.create(new float[][]{{1}, {1}});
         INDArray xvec2 = Nd4j.create(new float[][]{{1}, {2}});
