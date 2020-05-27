@@ -14,10 +14,9 @@ public class LeastMeanSquaredCalculator {
         lambda = 1;
     }
 
-    // y is scalar
     private void update_b(INDArray x, float y) {
         update_gamma(x);
-        float sub = y - (x.transpose().mmul(b_k)).getFloat(0); // ansonsten indarray
+        float sub = y - (x.transpose().mmul(b_k)).getFloat(0);
         INDArray mmul = gamma_k.mul(sub);
         b_k = b_k.add(mmul);
     }
@@ -46,21 +45,4 @@ public class LeastMeanSquaredCalculator {
     public INDArray getP_k() {
         return p_k;
     }
-
-    /*
-    INDArray gamma = (P.mmul(x)).div(x.transpose().mmul(P).mmul(x).add(lambda));
-    INDArray correction = y.sub(x.transpose().mul(b));
-
-    INDArray b1=b.add(gamma.mul(correction));
-    INDArray P1= P.sub(gamma.mul((x.transpose().mmul(P)))).mul(1/lambda );
-
-    public INDArray addValue(INDArray b_k_plusOne) {
-        if (b_k == null) {
-            b_k = Nd4j.zeros(b_k_plusOne.shape());
-            p_k = Nd4j.eye(b_k_plusOne.columns()).mul(100);
-        }
-
-        return null;
-    }
-    */
 }
