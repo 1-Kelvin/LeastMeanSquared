@@ -10,15 +10,15 @@ public class LeastMeanSquaredCalculator {
 
     public LeastMeanSquaredCalculator(int dimension) {
         p_k = Nd4j.eye(dimension).mul(100);
-        //b_k = Nd4j.zeros(2);
-        b_k = Nd4j.create(new float[1 * 2], new int[]{1, 2});
-        lambda = 0.99f;
+        b_k = Nd4j.create(new float[][]{{0}, {0}});
+        lambda = 1;
     }
 
-    private void update_b(INDArray x, INDArray y) {
+    // y is scalar
+    private void update_b(INDArray x, float y) {
         update_gamma(x);
-        INDArray sub = y.sub(x.transpose().mmul(b_k));
-        INDArray mmul = gamma_k.mmul(sub);
+        float sub = y - (x.transpose().mmul(b_k)).getFloat(0); // ansonsten indarray
+        INDArray mmul = gamma_k.mul(sub);
         b_k = b_k.add(mmul);
     }
 
@@ -33,7 +33,7 @@ public class LeastMeanSquaredCalculator {
         gamma_k = counter.div(denominator);
     }
 
-    public INDArray calculate (INDArray x, INDArray y) {
+    public INDArray calculate (INDArray x, float y) {
         update_b(x, y);
         update_p(x);
         return b_k;
